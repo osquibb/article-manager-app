@@ -12,8 +12,20 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Title = styled.h6`
+const Title = styled.h5`
   padding: 8px;
+  margin: 0;
+  border-bottom: 1px solid lightgrey;
+`;
+const Input = styled.input`
+  padding: 8px;
+  border-style: none;
+  border-bottom: 1px solid lightgrey;
+  &:focus {
+    outline: none;
+    background-color: #DCF8FF;
+  }
+
 `;
 const FileList = styled.div`
   padding: 8px;
@@ -50,6 +62,7 @@ export default class Folder extends React.Component {
   }
 
   render() {
+    const isFirstFolder = this.props.index === 0;
     return(
       <Draggable draggableId={this.props.folder.id} index={this.props.index}>
         {provided => (
@@ -58,9 +71,13 @@ export default class Folder extends React.Component {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <Title>
-                <input type='text' placeholder={this.props.folder.title}/>
-            </Title>
+                {isFirstFolder 
+                  ? <Title>Files</Title> 
+                  : <Input type='text'
+                           placeholder={this.props.folder.title}
+                           hidden={isFirstFolder}
+                    />
+                }
             <Droppable droppableId={this.props.folder.id} type="file">
               {(provided, snapshot) => (
                 <FileList

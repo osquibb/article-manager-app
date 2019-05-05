@@ -126,15 +126,12 @@ class FolderSection extends React.Component {
             >
               {this.state.folderOrder.map((folderId, index) => {
                 const folder = this.state.folders[folderId];
-                const isDropDisabled = index < this.state.homeIndex;
-
                 return ( 
                   <InnerList
                     key={folder.id}
                     folder={folder}
                     fileMap={this.state.files}
                     index = {index}
-                    isDropDisabled={isDropDisabled} 
                   />
                 );
               })}

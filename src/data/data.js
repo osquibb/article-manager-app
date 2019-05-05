@@ -16,8 +16,13 @@ const data = {
       title: 'Untitled',
       fileIds: [],
     },
+    'folder-3': {
+      id: 'folder-3',
+      title: 'Untitled',
+      fileIds: [],
+    },
   },
-  folderOrder: ['folder-1', 'folder-2'],
+  folderOrder: ['folder-1', 'folder-2', 'folder-3'],
 };
 
 export default data;
