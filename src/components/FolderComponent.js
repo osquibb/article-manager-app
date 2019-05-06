@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import File from './FileComponent';
+import Article from './ArticleComponent';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   margin: 8px;
-  border: ${props => props.index == 0 ? 'none' : '1px solid lightgrey'};
+  border: ${props => props.index === 0 ? 'none' : '1px solid lightgrey'};
   background-color: white;
   border-radius: 2px;
   width: 200px;
@@ -20,6 +20,7 @@ const Title = styled.h5`
 `;
 const Input = styled.input`
   padding: 8px;
+  font-weight: 200;
   border-style: none;
   border-bottom: 1px solid lightgrey;
   &:focus {
@@ -28,7 +29,7 @@ const Input = styled.input`
   }
 
 `;
-const FileList = styled.div`
+const ArticleList = styled.div`
   padding: 8px;
   background-color: ${props => (props.isDraggingOver ? '#ECECEC' : 'inherit')};
   flex-grow: 1;
@@ -37,19 +38,38 @@ const FileList = styled.div`
 
 class InnerList extends React.Component {
   shouldComponentUpdate(nextProps) {
-    if (nextProps.files === this.props.files) {
+    if (nextProps.articles === this.props.articles) {
       return false;
     }
     return true;
   }
   render() {
-    return this.props.files.map((file, index) => (
-      <File key={file.id} file={file} index={index} />
+    return this.props.articles.map((article, index) => (
+      <Article key={article.id} article={article} index={index} />
     ));
   }
 }
 
 export default class Folder extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTerm: ''
+    };
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+  }
+
+  handleSearchChange(e) {
+    this.setState({searchTerm: e.target.value});
+  }
+
+  handleSearchSubmit(e) {
+    if(e.key === 'Enter') {
+      this.props.getWikiArticles(this.state.searchTerm);
+    }
+  }
 
   render() {
     const isFirstFolder = this.props.index === 0;
@@ -66,18 +86,21 @@ export default class Folder extends React.Component {
                   ? <Title>{this.props.folder.title}</Title> 
                   : <Input type='text'
                            placeholder="Search..."
+                           value={this.state.searchTerm}
+                           onChange={this.handleSearchChange}
+                           onKeyDown={this.handleSearchSubmit}
                     />
                 }
-            <Droppable droppableId={this.props.folder.id} type="file">
+            <Droppable droppableId={this.props.folder.id} type="article">
               {(provided, snapshot) => (
-                <FileList
+                <ArticleList
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   isDraggingOver={snapshot.isDraggingOver}
                 >
-                  <InnerList files={this.props.files} />
+                  <InnerList articles={this.props.articles} />
                   {provided.placeholder}
-                </FileList>
+                </ArticleList>
               )}
             </Droppable>
           </Container>

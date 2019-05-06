@@ -9,28 +9,36 @@ display: flex;
 justify-content: center;
 `;
 
-class InnerList extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    if (
-      nextProps.folder === this.props.folder &&
-      nextProps.fileMap === this.props.fileMap &&
-      nextProps.index === this.props.index
-    ) {
-      return false;
-    }
-    return true;
-  }
-
-  render() {
-      const { folder, fileMap, index } = this.props;
-      const files = folder.fileIds.map(fileId => fileMap[fileId]);
-      return <Folder folder={folder} files={files} index={index} />;
-  }
-}
-
 class FolderSection extends React.Component {
   
-  state = data;
+  constructor(props) {
+    super(props);
+    this.state = {
+      articles: data.articles,
+      folders: data.folders,
+      folderOrder: data.folderOrder,
+      nextArticleNum: 5
+    };
+    this.getWikiArticles = this.getWikiArticles.bind(this);
+  }
+
+  getWikiArticles(searchTerm) {
+    fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=4`)
+    .then(resp => resp.json())
+    .then(data => {
+      const newState = {...this.state};
+      newState.folders['folder-1'].articleIds = [];
+      for(let i=0; i < data[1].length; i++) {
+        const next = this.state.nextArticleNum;
+        newState.articles[`article-${next}`] = {id: `article-${next}`, content: data[1][i]};
+        console.log(`article-${next}`);
+        newState.folders['folder-1'].articleIds.push(`article-${next}`);
+        this.setState(prevState =>({nextArticleNum: prevState.nextArticleNum + 1}));
+      }
+      console.log(newState);
+    })
+    .catch(err => console.log(err));
+  }
 
   onDragEnd = result => {
     const { destination, source, draggableId, type } = result;
@@ -63,13 +71,13 @@ class FolderSection extends React.Component {
     const finish = this.state.folders[destination.droppableId];
 
     if (start === finish) {
-      const newFileIds = Array.from(start.fileIds);
-      newFileIds.splice(source.index, 1);
-      newFileIds.splice(destination.index, 0, draggableId);
+      const newarticleIds = Array.from(start.articleIds);
+      newarticleIds.splice(source.index, 1);
+      newarticleIds.splice(destination.index, 0, draggableId);
 
       const newfolder = {
         ...start,
-        fileIds: newFileIds  
+        articleIds: newarticleIds  
       }
 
       const newState = {
@@ -85,18 +93,18 @@ class FolderSection extends React.Component {
     }
     
     // Moving from one Folder to another
-    const startFileIds = Array.from(start.fileIds);
-    startFileIds.splice(source.index, 1);
+    const startarticleIds = Array.from(start.articleIds);
+    startarticleIds.splice(source.index, 1);
     const newStart = {
       ...start,
-      fileIds: startFileIds,
+      articleIds: startarticleIds,
     };
 
-    const finishFileIds = Array.from(finish.fileIds);
-    finishFileIds.splice(destination.index, 0, draggableId);
+    const finisharticleIds = Array.from(finish.articleIds);
+    finisharticleIds.splice(destination.index, 0, draggableId);
     const newFinish = {
       ...finish,
-      fileIds: finishFileIds,
+      articleIds: finisharticleIds,
     };
 
     const newState = {
@@ -127,12 +135,14 @@ class FolderSection extends React.Component {
             >
               {this.state.folderOrder.map((folderId, index) => {
                 const folder = this.state.folders[folderId];
-                return ( 
-                  <InnerList
+                const articles = folder.articleIds.map(articleId => this.state.articles[articleId]);
+                return (
+                  <Folder 
                     key={folder.id}
-                    folder={folder}
-                    fileMap={this.state.files}
-                    index = {index}
+                    folder={folder} 
+                    articles={articles} 
+                    index={index}
+                    getWikiArticles = {this.getWikiArticles}
                   />
                 );
               })}

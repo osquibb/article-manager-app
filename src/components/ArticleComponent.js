@@ -14,11 +14,11 @@ const Container = styled.div`
 `;
 
 
-export default class File extends React.Component {
+export default class Article extends React.Component {
   render() {
     return( 
       <Draggable 
-        draggableId={this.props.file.id} 
+        draggableId={this.props.article.id} 
         index={this.props.index}
       >
         {(provided, snapshot) => (
@@ -28,7 +28,7 @@ export default class File extends React.Component {
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
-            {this.props.file.content}
+            {this.props.article.content}
           </Container>
         )}
       </Draggable>

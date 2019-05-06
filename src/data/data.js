@@ -1,25 +1,25 @@
 const data = {
-  files: {
-    'file-1': { id: 'file-1', content: 'file 1 content'},
-    'file-2': { id: 'file-2', content: 'file 2 content'},
-    'file-3': { id: 'file-3', content: 'file 3 content'},
-    'file-4': { id: 'file-4', content: 'file 4 content'},
+  articles: {
+    'article-1': { id: 'article-1', content: 'empty'},
+    'article-2': { id: 'article-2', content: 'empty'},
+    'article-3': { id: 'article-3', content: 'empty'},
+    'article-4': { id: 'article-4', content: 'empty'},
   },
   folders: {
     'folder-1': {
       id: 'folder-1',
-      title: 'Untitled',
-      fileIds: ['file-1', 'file-2', 'file-3', 'file-4'],
+      title: '',
+      articleIds: ['article-1', 'article-2', 'article-3', 'article-4'],
     },
     'folder-2': {
       id: 'folder-2',
       title: 'Untitled',
-      fileIds: [],
+      articleIds: [],
     },
     'folder-3': {
       id: 'folder-3',
       title: 'Untitled',
-      fileIds: [],
+      articleIds: [],
     },
   },
   folderOrder: ['folder-1', 'folder-2', 'folder-3'],
