@@ -13,6 +13,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 const Title = styled.h5`
+  color: #9E9E9E;
   padding: 8px;
   margin: 0;
   border-bottom: 1px solid lightgrey;
@@ -50,17 +51,6 @@ class InnerList extends React.Component {
 
 export default class Folder extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.handleFolderTitleChange = this.handleFolderTitleChange.bind(this);
-  }
-
-  handleFolderTitleChange(event) {
-    console.log('hello');
-    event.preventDefault();
-  }
-
   render() {
     const isFirstFolder = this.props.index === 0;
     return(
@@ -71,11 +61,10 @@ export default class Folder extends React.Component {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-                {isFirstFolder 
-                  ? <Title>Files</Title> 
+                {!isFirstFolder 
+                  ? <Title>{this.props.folder.title}</Title> 
                   : <Input type='text'
-                           placeholder={this.props.folder.title}
-                           hidden={isFirstFolder}
+                           placeholder="Search..."
                     />
                 }
             <Droppable droppableId={this.props.folder.id} type="file">

@@ -6,7 +6,7 @@ import data from '../data/data';
 
 const Container = styled.div`
 display: flex;
-justify-content: flex-end;
+justify-content: center;
 `;
 
 class InnerList extends React.Component {
@@ -29,6 +29,7 @@ class InnerList extends React.Component {
 }
 
 class FolderSection extends React.Component {
+  
   state = data;
 
   onDragEnd = result => {
