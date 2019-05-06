@@ -17,27 +17,52 @@ class FolderSection extends React.Component {
       articles: data.articles,
       folders: data.folders,
       folderOrder: data.folderOrder,
-      nextArticleNum: 5
+      nextArticleId: 5
     };
+  
     this.getWikiArticles = this.getWikiArticles.bind(this);
+    this.deleteArticle = this.deleteArticle.bind(this);
   }
 
   getWikiArticles(searchTerm) {
     fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=4`)
     .then(resp => resp.json())
     .then(data => {
-      const newState = {...this.state};
-      newState.folders['folder-1'].articleIds = [];
+      const newArticles = {};
+      const newFolder = {
+        id: 'folder-1',
+        title: '',
+        articleIds: []
+      };
       for(let i=0; i < data[1].length; i++) {
-        const next = this.state.nextArticleNum;
-        newState.articles[`article-${next}`] = {id: `article-${next}`, content: data[1][i]};
-        console.log(`article-${next}`);
-        newState.folders['folder-1'].articleIds.push(`article-${next}`);
-        this.setState(prevState =>({nextArticleNum: prevState.nextArticleNum + 1}));
+        const next = this.state.nextArticleId;
+        newArticles[`article-${next}`] = {id: `article-${next}`, content: data[1][i]};
+        newFolder.articleIds.push(`article-${next}`);
+        this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
       }
-      console.log(newState);
+      const newState = {
+        ...this.state,
+        articles: {...this.state.articles, ...newArticles},
+        folders: {
+          ...this.state.folders,
+          'folder-1': newFolder
+        }
+      };
+      return newState;
     })
+    .then(newState => this.setState(newState))
     .catch(err => console.log(err));
+  }
+
+  deleteArticle(articleId) {
+    const newState = {...this.state};
+    delete newState.articles[articleId]
+    for (let i in newState.folders) {
+      if (newState.folders[i].articleIds.indexOf(articleId) !== -1) {
+        delete newState.folders[i].articleIds.slice(articleId, 1);
+      }
+    }
+    //...
   }
 
   onDragEnd = result => {
@@ -142,7 +167,8 @@ class FolderSection extends React.Component {
                     folder={folder} 
                     articles={articles} 
                     index={index}
-                    getWikiArticles = {this.getWikiArticles}
+                    getWikiArticles={this.getWikiArticles}
+                    deleteArticle={this.deleteArticle}
                   />
                 );
               })}

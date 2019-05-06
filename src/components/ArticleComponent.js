@@ -4,6 +4,8 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   border: 1px solid #9E9E9E;
+  display: flex;
+  justify-content: space-between;
   border-radius: 2px;
   padding: 8px;
   margin-bottom: 8px;
@@ -13,6 +15,10 @@ const Container = styled.div`
   display: flex;
 `;
 
+const DeleteButton = styled.button`
+  border: none;
+  background-color: inherit;
+`;
 
 export default class Article extends React.Component {
   render() {
@@ -28,7 +34,12 @@ export default class Article extends React.Component {
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
-            {this.props.article.content}
+            
+              <div>{this.props.article.content}</div>
+              <DeleteButton className="fa fa-trash-o"
+                            onClick={() => this.props.deleteArticle(this.props.article.id)}
+              />
+            
           </Container>
         )}
       </Draggable>

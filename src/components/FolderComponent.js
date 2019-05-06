@@ -45,7 +45,11 @@ class InnerList extends React.Component {
   }
   render() {
     return this.props.articles.map((article, index) => (
-      <Article key={article.id} article={article} index={index} />
+      <Article key={article.id}
+               article={article} 
+               index={index}
+               deleteArticle = {this.props.deleteArticle}
+      />
     ));
   }
 }
@@ -98,7 +102,9 @@ export default class Folder extends React.Component {
                   {...provided.droppableProps}
                   isDraggingOver={snapshot.isDraggingOver}
                 >
-                  <InnerList articles={this.props.articles} />
+                  <InnerList articles={this.props.articles}
+                             deleteArticle={this.props.deleteArticle}
+                  />
                   {provided.placeholder}
                 </ArticleList>
               )}
