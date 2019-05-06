@@ -55,14 +55,36 @@ class FolderSection extends React.Component {
   }
 
   deleteArticle(articleId) {
-    const newState = {...this.state};
-    delete newState.articles[articleId]
-    for (let i in newState.folders) {
-      if (newState.folders[i].articleIds.indexOf(articleId) !== -1) {
-        delete newState.folders[i].articleIds.slice(articleId, 1);
+    const folders = this.state.folders;
+    let folderId = 0;
+    for (let id in folders) {
+      if (folders[id].articleIds.indexOf(articleId) !== -1) {
+        folderId = id;
       }
     }
-    //...
+    const newArticles = {};
+    for (let id in this.state.articles) {
+      if (id !== articleId) {
+        newArticles[id] = this.state.articles[id];
+      }
+    }
+    const folder = this.state.folders[folderId];
+    const newArticleIds = [...folder.articleIds];
+    newArticleIds.splice(newArticleIds.indexOf(articleId), 1);
+    const newFolder = {
+      id: folder.id,
+      title: folder.title,
+      articleIds: newArticleIds
+    }
+    const newState = {
+      ...this.state,
+      articles: newArticles,
+      folders: {
+        ...this.state.folders,
+        [folderId]: newFolder
+      }
+    };
+    this.setState(newState);
   }
 
   onDragEnd = result => {
