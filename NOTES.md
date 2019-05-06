@@ -2,6 +2,8 @@
 
 - Link to wiki articles
 - Custom folder titles
-- delete article button + functionality
 - other styling
+- clean out article obj after search if not moved
+  to a folder
+
 

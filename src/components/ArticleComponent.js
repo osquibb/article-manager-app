@@ -34,8 +34,7 @@ export default class Article extends React.Component {
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
-            
-              <div>{this.props.article.content}</div>
+              <a href={this.props.article.link} target="_blank'">{this.props.article.content}</a>
               <DeleteButton className="fa fa-trash-o"
                             onClick={() => this.props.deleteArticle(this.props.article.id)}
               />

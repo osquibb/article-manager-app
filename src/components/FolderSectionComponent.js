@@ -17,7 +17,7 @@ class FolderSection extends React.Component {
       articles: data.articles,
       folders: data.folders,
       folderOrder: data.folderOrder,
-      nextArticleId: 5
+      nextArticleId: 0
     };
   
     this.getWikiArticles = this.getWikiArticles.bind(this);
@@ -36,7 +36,7 @@ class FolderSection extends React.Component {
       };
       for(let i=0; i < data[1].length; i++) {
         const next = this.state.nextArticleId;
-        newArticles[`article-${next}`] = {id: `article-${next}`, content: data[1][i]};
+        newArticles[`article-${next}`] = {id: `article-${next}`, content: data[1][i], link: data[3][i]};
         newFolder.articleIds.push(`article-${next}`);
         this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
       }

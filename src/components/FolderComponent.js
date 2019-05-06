@@ -9,6 +9,7 @@ const Container = styled.div`
   background-color: white;
   border-radius: 2px;
   width: 200px;
+  min-height: 260px;
   display: flex;
   flex-direction: column;
 `;
@@ -89,7 +90,7 @@ export default class Folder extends React.Component {
                 {!isFirstFolder 
                   ? <Title>{this.props.folder.title}</Title> 
                   : <Input type='text'
-                           placeholder="Search..."
+                           placeholder="Search Wikipedia..."
                            value={this.state.searchTerm}
                            onChange={this.handleSearchChange}
                            onKeyDown={this.handleSearchSubmit}
