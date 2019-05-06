@@ -1,6 +1,5 @@
 ## TODO
 
-- Link to wiki articles
 - Custom folder titles
 - other styling
 - clean out article obj after search if not moved

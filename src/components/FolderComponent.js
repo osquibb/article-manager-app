@@ -79,7 +79,11 @@ export default class Folder extends React.Component {
   render() {
     const isFirstFolder = this.props.index === 0;
     return(
-      <Draggable draggableId={this.props.folder.id} index={this.props.index}>
+      <Draggable 
+        draggableId={this.props.folder.id} 
+        isDragDisabled={this.props.folder.id === 'folder-1'}
+        index={this.props.index}
+        >
         {provided => (
           <Container
             {...provided.draggableProps}

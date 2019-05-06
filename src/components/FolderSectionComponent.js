@@ -186,7 +186,7 @@ class FolderSection extends React.Component {
         < Droppable 
           droppableId = "all-folders"
           direction = "horizontal"
-          type = "folder" 
+          type = "folder"
         >
           {provided => (
             <Container
