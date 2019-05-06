@@ -5,10 +5,10 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
   margin: 8px;
-  border: 1px solid lightgrey;
+  border: ${props => props.index == 0 ? 'none' : '1px solid lightgrey'};
   background-color: white;
   border-radius: 2px;
-  width: 220px;
+  width: 200px;
   display: flex;
   flex-direction: column;
 `;
@@ -60,6 +60,7 @@ export default class Folder extends React.Component {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
+            index={this.props.index}
           >
                 {!isFirstFolder 
                   ? <Title>{this.props.folder.title}</Title> 
