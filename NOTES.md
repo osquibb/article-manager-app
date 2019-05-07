@@ -8,4 +8,8 @@
 - back button
 - forward + back button hide if no more results available
 
+## CONCERNS
+
+- Currently, articles are added to this.state.articles each time the search results page advances.  This poses a problem when loading the previous page.  May be better to load all search results into this.state.articles and then have this.state.folders.articleIds updated with ids of viewable articles for the current page.  Would be more in line with dnd docs....
+
 

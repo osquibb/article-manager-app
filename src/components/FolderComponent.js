@@ -85,11 +85,16 @@ export default class Folder extends React.Component {
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.nextPage = this.nextPage.bind(this);
+    this.prevPage = this.prevPage.bind(this);
   }
 
   nextPage() {
     this.setState(prevState => ({pageNum: prevState.pageNum + 1}),
       () => this.props.populateSearchResults('', this.state.pageNum, false));
+  }
+
+  prevPage() {
+    return null;
   }
 
   handleSearchChange(e) {
@@ -139,6 +144,9 @@ export default class Folder extends React.Component {
                              deleteArticle={this.props.deleteArticle}
                   />
                   <Footer hidden={hideFooter}>
+                  <Button onClick={this.prevPage} 
+                          className="fa fa-arrow-circle-left fa-2x">
+                  </Button>
                   <Button onClick={this.nextPage} 
                           className="fa fa-arrow-circle-right fa-2x">
                   </Button>
