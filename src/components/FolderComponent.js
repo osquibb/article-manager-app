@@ -12,6 +12,7 @@ const Container = styled.div`
   min-height: 260px;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 const Title = styled.h5`
   color: #9E9E9E;
@@ -36,6 +37,16 @@ const ArticleList = styled.div`
   flex-grow: 1;
   min-height: 100px;
   `;
+
+const Footer = styled.button`
+border: none;
+background: white;
+color: #9E9E9E;
+position: absolute;
+bottom: -30px;
+right: 8px;
+
+`;
 
 class InnerList extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -78,6 +89,8 @@ export default class Folder extends React.Component {
 
   render() {
     const isFirstFolder = this.props.index === 0;
+    const hideFooter = this.props.folder.id !== 'folder-1' ||
+      (this.props.folder.id === 'folder-1' && this.props.articles.length === 0);
     return(
       <Draggable 
         draggableId={this.props.folder.id} 
@@ -110,6 +123,7 @@ export default class Folder extends React.Component {
                   <InnerList articles={this.props.articles}
                              deleteArticle={this.props.deleteArticle}
                   />
+                  <Footer hidden={hideFooter}><i className="fa fa-arrow-circle-right fa-2x"></i></Footer>
                   {provided.placeholder}
                 </ArticleList>
               )}

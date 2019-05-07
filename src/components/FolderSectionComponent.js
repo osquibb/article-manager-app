@@ -43,10 +43,10 @@ class FolderSection extends React.Component {
       this.setState(newState);
     } 
     else {
-      fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=4`)
+      fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=20`)
       .then(resp => resp.json())
       .then(data => {
-        for(let i=0; i < data[1].length; i++) {
+        for(let i=0; i < 4; i++) {
           const next = this.state.nextArticleId;
           newArticles[`article-${next}`] = {id: `article-${next}`, content: data[1][i], link: data[3][i]};
           newFolder.articleIds.push(`article-${next}`);
