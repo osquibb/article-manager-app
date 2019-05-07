@@ -17,21 +17,37 @@ class FolderSection extends React.Component {
       articles: data.articles,
       folders: data.folders,
       folderOrder: data.folderOrder,
-      nextArticleId: 0
+      nextArticleId: 0,
+      searchResults: []
     };
   
     this.getWikiArticles = this.getWikiArticles.bind(this);
+    this.populateSearchResults = this.populateSearchResults.bind(this);
     this.deleteArticle = this.deleteArticle.bind(this);
   }
 
   getWikiArticles(searchTerm) {
+    if (searchTerm === '') {
+      this.setState({searchResults: []});
+    } else {
+    fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=20`)
+    .then(resp => resp.json())
+    .then(data => this.setState({searchResults: data}))
+    .catch(err => console.log(err));
+    }
+  }
+
+  async populateSearchResults(searchTerm, pageNum) {
+    await this.getWikiArticles(searchTerm);
+    const searchResults = this.state.searchResults;
+    
     const newArticles = {};
     const newFolder = {
       id: 'folder-1',
       title: '',
       articleIds: []
     };
-    if (searchTerm === '') {
+    if (searchResults.length === 0) {
       const newState = {
         ...this.state,
         articles: {...this.state.articles, ...newArticles},
@@ -43,28 +59,23 @@ class FolderSection extends React.Component {
       this.setState(newState);
     } 
     else {
-      fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=20`)
-      .then(resp => resp.json())
-      .then(data => {
-        for(let i=0; i < 4; i++) {
-          const next = this.state.nextArticleId;
-          newArticles[`article-${next}`] = {id: `article-${next}`, content: data[1][i], link: data[3][i]};
-          newFolder.articleIds.push(`article-${next}`);
-          this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
+      const lastIdx = pageNum + 4;
+      for(let i=0; i < 4; i++) {
+        const next = this.state.nextArticleId;
+        newArticles[`article-${next}`] = {id: `article-${next}`, content: searchResults[1][i], link: searchResults[3][i]};
+        newFolder.articleIds.push(`article-${next}`);
+        this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
+      }
+      const newState = {
+        ...this.state,
+        articles: {...this.state.articles, ...newArticles},
+        folders: {
+          ...this.state.folders,
+          'folder-1': newFolder
         }
-        const newState = {
-          ...this.state,
-          articles: {...this.state.articles, ...newArticles},
-          folders: {
-            ...this.state.folders,
-            'folder-1': newFolder
-          }
-        };
-        return newState;
-      })
-      .then(newState => this.setState(newState))
-      .catch(err => console.log(err));
-    }
+      };
+      this.setState(newState);
+    } 
   }
 
   deleteArticle(articleId) {
@@ -202,7 +213,7 @@ class FolderSection extends React.Component {
                     folder={folder} 
                     articles={articles} 
                     index={index}
-                    getWikiArticles={this.getWikiArticles}
+                    populateSearchResults={this.populateSearchResults}
                     deleteArticle={this.deleteArticle}
                   />
                 );

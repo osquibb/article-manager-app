@@ -83,7 +83,7 @@ export default class Folder extends React.Component {
 
   handleSearchSubmit(e) {
     if(e.key === 'Enter') {
-      this.props.getWikiArticles(this.state.searchTerm);
+      this.props.populateSearchResults(this.state.searchTerm, 1);
     }
   }
 
