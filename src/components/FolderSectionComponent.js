@@ -30,7 +30,7 @@ class FolderSection extends React.Component {
     if (searchTerm === '') {
       this.setState({searchResults: []});
     } else {
-    fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=20`)
+    fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=32`)
     .then(resp => resp.json())
     .then(data => this.setState({searchResults: data}))
     .catch(err => console.log(err));
