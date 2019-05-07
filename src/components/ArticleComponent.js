@@ -17,7 +17,11 @@ const Container = styled.div`
 
 const DeleteButton = styled.button`
   border: none;
+  color: #9E9E9E;
   background-color: inherit;
+  &:hover {
+    color: black;
+  }
 `;
 
 export default class Article extends React.Component {

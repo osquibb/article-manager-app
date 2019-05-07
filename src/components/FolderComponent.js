@@ -38,14 +38,22 @@ const ArticleList = styled.div`
   min-height: 100px;
   `;
 
-const Footer = styled.button`
+const Button = styled.button`
+border: none;
+background: none;
+color: #9E9E9E;
+&:hover {
+  color: black;
+}
+`;
+
+const Footer = styled.div`
 border: none;
 background: white;
 color: #9E9E9E;
 position: absolute;
 bottom: -30px;
 right: 8px;
-
 `;
 
 class InnerList extends React.Component {
@@ -71,10 +79,17 @@ export default class Folder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ''
+      searchTerm: '',
+      pageNum: 1
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.nextPage = this.nextPage.bind(this);
+  }
+
+  nextPage() {
+    this.setState(prevState => ({pageNum: prevState.pageNum + 1}),
+      () => this.props.populateSearchResults('', this.state.pageNum, false));
   }
 
   handleSearchChange(e) {
@@ -123,7 +138,11 @@ export default class Folder extends React.Component {
                   <InnerList articles={this.props.articles}
                              deleteArticle={this.props.deleteArticle}
                   />
-                  <Footer hidden={hideFooter}><i className="fa fa-arrow-circle-right fa-2x"></i></Footer>
+                  <Footer hidden={hideFooter}>
+                  <Button onClick={this.nextPage} 
+                          className="fa fa-arrow-circle-right fa-2x">
+                  </Button>
+                  </Footer>
                   {provided.placeholder}
                 </ArticleList>
               )}

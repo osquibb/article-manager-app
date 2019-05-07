@@ -37,45 +37,43 @@ class FolderSection extends React.Component {
     }
   }
 
-  async populateSearchResults(searchTerm, pageNum) {
-    await this.getWikiArticles(searchTerm);
-    const searchResults = this.state.searchResults;
-    
+  async populateSearchResults(searchTerm, pageNum, newSearch=true) {
     const newArticles = {};
-    const newFolder = {
-      id: 'folder-1',
-      title: '',
-      articleIds: []
-    };
-    if (searchResults.length === 0) {
-      const newState = {
-        ...this.state,
-        articles: {...this.state.articles, ...newArticles},
-        folders: {
-          ...this.state.folders,
-          'folder-1': newFolder
-        }
+      const newFolder = {
+        id: 'folder-1',
+        title: '',
+        articleIds: []
       };
-      this.setState(newState);
-    } 
-    else {
-      const lastIdx = pageNum + 4;
-      for(let i=0; i < 4; i++) {
-        const next = this.state.nextArticleId;
-        newArticles[`article-${next}`] = {id: `article-${next}`, content: searchResults[1][i], link: searchResults[3][i]};
-        newFolder.articleIds.push(`article-${next}`);
-        this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
+    const searchResults = this.state.searchResults;
+    if(newSearch) {
+      await this.getWikiArticles(searchTerm);
+      if (searchResults.length !== 0) {
+        for(let i=0; i < 4; i++) {
+          await this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
+          const next = this.state.nextArticleId;
+          newArticles[`article-${next}`] = {id: `article-${next}`, content: searchResults[1][i], link: searchResults[3][i]};
+          newFolder.articleIds.push(`article-${next}`);  
+        }
       }
-      const newState = {
-        ...this.state,
-        articles: {...this.state.articles, ...newArticles},
-        folders: {
-          ...this.state.folders,
-          'folder-1': newFolder
-        }
-      };
-      this.setState(newState);
     } 
+    else if (!newSearch) {
+      const lastIdx = pageNum * 4;
+      for(let i=lastIdx-4; i < lastIdx; i++) {
+        await this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
+        const next = this.state.nextArticleId;
+        newArticles[`article-${next}`] = {id: `article-${next}`, content: this.state.searchResults[1][i], link: this.state.searchResults[3][i]};
+        newFolder.articleIds.push(`article-${next}`);
+      }
+    }
+    const newState = {
+      ...this.state,
+      articles: {...this.state.articles, ...newArticles},
+      folders: {
+        ...this.state.folders,
+        'folder-1': newFolder
+      }
+    };
+    this.setState(newState);
   }
 
   deleteArticle(articleId) {
