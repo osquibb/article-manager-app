@@ -135,7 +135,9 @@ export default class Folder extends React.Component {
                            onKeyDown={this.handleSearchSubmit}
                     />
                 }
-            <Droppable droppableId={this.props.folder.id} type="article">
+            <Droppable droppableId={this.props.folder.id} 
+                       type="article"
+                       isDropDisabled={this.props.folder.id === 'folder-1'}>
               {(provided, snapshot) => (
                 <ArticleList
                   ref={provided.innerRef}
