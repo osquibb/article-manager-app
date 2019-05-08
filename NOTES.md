@@ -13,7 +13,7 @@
   (if >0 and <4 next or prev available, populate with next or prev + articles on current page
   to make a list of 4 or max possible if less than 4)
 
-
+- separate sync searchResults and folder-1 function called on every componentDidUpdate??
 
 - encapsulate populateSearchResults(searchTerm) <- which would include the wiki fetch
 and navigateSearchResults(next,prev) in separate functions.

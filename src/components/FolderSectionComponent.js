@@ -107,6 +107,15 @@ class FolderSection extends React.Component {
         folderId = id;
       }
     }
+
+    let newSearchResults = [...this.state.searchResults];
+    for (let i=0; i < newSearchResults.length; i++) {
+      if (newSearchResults[i].id === articleId) {
+        newSearchResults.splice(i, 1);
+      } 
+    }
+    this.setState({searchResults: newSearchResults});
+
     const newArticles = {};
     for (let id in this.state.articles) {
       if (id !== articleId) {
