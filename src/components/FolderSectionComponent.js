@@ -18,7 +18,9 @@ class FolderSection extends React.Component {
       folders: data.folders,
       folderOrder: data.folderOrder,
       nextArticleId: 0,
-      searchResults: []
+      searchResults: [],
+      firstResultVisible: false,
+      lastResultVisible: false
     };
   
     this.getWikiArticles = this.getWikiArticles.bind(this);
@@ -26,15 +28,46 @@ class FolderSection extends React.Component {
     this.deleteArticle = this.deleteArticle.bind(this);
   }
 
-  getWikiArticles(searchTerm) {
-    if (searchTerm === '') {
-      this.setState({searchResults: []});
-    } else {
-    fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=32`)
-    .then(resp => resp.json())
-    .then(data => this.setState({searchResults: data}))
-    .catch(err => console.log(err));
-    }
+  // componentDidUpdate(prevProps, prevState, snapshot) {
+  //   const prevArticleIds = prevState.folders['folder-1'].articleIds;
+  //   const currentArticleIds = this.state.folders['folder-1'].articleIds
+  //   const newSearchResults = [];
+  //   // for each article in the previous folder list..
+  //   for (let i=0; i < prevArticleIds.length; i++) {
+  //     const foundIdx = currentArticleIds.indexOf(prevArticleIds[i]);
+  //     // if an article was in the previous list but not in the current list...
+  //     if (foundIdx === -1) {
+  //       // for each article in the search results list..
+  //       for (let j=0; j < this.state.searchResults.length; j++) {
+  //         // add to new search results every item except the one missing from the previous list
+  //         if (this.state.searchResults[j].id !== prevArticleIds[i]) {
+  //           newSearchResults.push(this.state.searchResults[j]);
+  //         }
+  //       }
+  //     }
+  //   }
+  //   this.setState({searchResults: newSearchResults})
+
+  // }
+
+  async getWikiArticles(searchTerm) {
+    let searchResults = [];
+    if (searchTerm !== '') {
+      await fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=32`)
+            .then(resp => resp.json())
+            .then(data => {
+              let _searchResults = []
+              for (let i=0; i < data[1].length; i++) {
+                this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}), () => {
+                  _searchResults.push({id: `article-${this.state.nextArticleId}`, content: data[1][i], link: data[3][i]});
+                });
+              }
+              return _searchResults;
+            })
+            .then(_searchResults => searchResults = _searchResults)
+            .catch(err => console.log(err));
+          }
+    return searchResults;
   }
 
   async populateSearchResults(searchTerm, pageNum, newSearch=true) {
@@ -44,36 +77,46 @@ class FolderSection extends React.Component {
         title: '',
         articleIds: []
       };
-    const searchResults = this.state.searchResults;
-    if(newSearch) {
-      await this.getWikiArticles(searchTerm);
-      if (searchResults.length !== 0) {
-        for(let i=0; i < 4; i++) {
-          await this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
-          const next = this.state.nextArticleId;
-          newArticles[`article-${next}`] = {id: `article-${next}`, content: searchResults[1][i], link: searchResults[3][i]};
-          newFolder.articleIds.push(`article-${next}`);  
-        }
-      }
-    } 
-    else if (!newSearch) {
-      const lastIdx = pageNum * 4;
-      for(let i=lastIdx-4; i < lastIdx; i++) {
-        await this.setState(prevState => ({nextArticleId: prevState.nextArticleId + 1}));
-        const next = this.state.nextArticleId;
-        newArticles[`article-${next}`] = {id: `article-${next}`, content: this.state.searchResults[1][i], link: this.state.searchResults[3][i]};
-        newFolder.articleIds.push(`article-${next}`);
-      }
+    let searchResults = [];
+    if (newSearch) {
+      searchResults = await this.getWikiArticles(searchTerm);
+    } else {
+      searchResults = this.state.searchResults;
     }
-    const newState = {
-      ...this.state,
-      articles: {...this.state.articles, ...newArticles},
-      folders: {
-        ...this.state.folders,
-        'folder-1': newFolder
+    this.setState({searchResults}, () => {
+      let lastIdx = pageNum * 4;
+      if (lastIdx >= searchResults.length) {
+        lastIdx = searchResults.length;
       }
-    };
-    this.setState(newState);
+      let firstIdx = lastIdx - 4;
+      if (firstIdx < 0) {
+        firstIdx = 0;
+      }
+      for (let i=firstIdx; i < lastIdx; i++) {
+        newArticles[searchResults[i].id] = {
+                                              id: searchResults[i].id,
+                                              content: searchResults[i].content, 
+                                              link: searchResults[i].link
+                                            };
+        newFolder.articleIds.push(searchResults[i].id)
+      }
+      const newState = {
+        ...this.state,
+        articles: {...this.state.articles, ...newArticles},
+        folders: {
+          ...this.state.folders,
+          'folder-1': newFolder
+        }
+      };
+      this.setState(newState, () => {
+        const firstResultVisible = this.state.folders['folder-1']
+                                    .articleIds.indexOf(searchResults[0].id) !== -1;
+        const lastResultVisible = this.state.folders['folder-1']
+                                    .articleIds.indexOf(searchResults[searchResults.length - 1].id) !== -1;
+        this.setState({firstResultVisible});
+        this.setState({lastResultVisible});
+      });
+    })
   }
 
   deleteArticle(articleId) {
@@ -185,6 +228,17 @@ class FolderSection extends React.Component {
       },
     };
     this.setState(newState);
+
+    // update searchResults after drag from 'folder-1'
+    if (start.id === 'folder-1') {
+      const newSearchResults = Array.from(this.state.searchResults);
+      for (let i=0; i < newSearchResults.length; i++) {
+        if (newSearchResults[i].id === draggableId) {
+          newSearchResults.splice(i, 1);
+        }
+      }
+      this.setState({searchResults: newSearchResults});
+    }
   };
 
   render() {
@@ -213,6 +267,8 @@ class FolderSection extends React.Component {
                     index={index}
                     populateSearchResults={this.populateSearchResults}
                     deleteArticle={this.deleteArticle}
+                    hidePrevButton={this.state.firstResultVisible}
+                    hideNextButton={this.state.lastResultVisible}
                   />
                 );
               })}

@@ -68,6 +68,7 @@ class InnerList extends React.Component {
       <Article key={article.id}
                article={article} 
                index={index}
+               hideDeleteButton={this.props.hideDeleteButton}
                deleteArticle = {this.props.deleteArticle}
       />
     ));
@@ -94,7 +95,8 @@ export default class Folder extends React.Component {
   }
 
   prevPage() {
-    return null;
+    this.setState(prevState => ({pageNum: prevState.pageNum - 1}),
+      () => this.props.populateSearchResults('', this.state.pageNum, false));
   }
 
   handleSearchChange(e) {
@@ -141,13 +143,16 @@ export default class Folder extends React.Component {
                   isDraggingOver={snapshot.isDraggingOver}
                 >
                   <InnerList articles={this.props.articles}
+                             hideDeleteButton={this.props.folder.id === 'folder-1'}
                              deleteArticle={this.props.deleteArticle}
                   />
                   <Footer hidden={hideFooter}>
-                  <Button onClick={this.prevPage} 
+                  <Button onClick={this.prevPage}
+                          hidden={this.props.hidePrevButton} 
                           className="fa fa-arrow-circle-left fa-2x">
                   </Button>
-                  <Button onClick={this.nextPage} 
+                  <Button onClick={this.nextPage}
+                          hidden={this.props.hideNextButton} 
                           className="fa fa-arrow-circle-right fa-2x">
                   </Button>
                   </Footer>

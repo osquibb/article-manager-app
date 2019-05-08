@@ -40,6 +40,7 @@ export default class Article extends React.Component {
           >
               <a href={this.props.article.link} target="_blank'">{this.props.article.content}</a>
               <DeleteButton className="fa fa-trash-o"
+                            hidden={this.props.hideDeleteButton}
                             onClick={() => this.props.deleteArticle(this.props.article.id)}
               />
             
