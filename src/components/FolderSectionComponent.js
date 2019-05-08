@@ -87,12 +87,14 @@ class FolderSection extends React.Component {
         }
       };
       this.setState(newState, () => {
-        const firstResultVisible = this.state.folders['folder-1']
-                                    .articleIds.indexOf(searchResults[0].id) !== -1;
-        const lastResultVisible = this.state.folders['folder-1']
-                                    .articleIds.indexOf(searchResults[searchResults.length - 1].id) !== -1;
-        this.setState({firstResultVisible});
-        this.setState({lastResultVisible});
+        if (searchResults[0]) {
+          const firstResultVisible = this.state.folders['folder-1']
+                                      .articleIds.indexOf(searchResults[0].id) !== -1;
+          const lastResultVisible = this.state.folders['folder-1']
+                                      .articleIds.indexOf(searchResults[searchResults.length - 1].id) !== -1;
+          this.setState({firstResultVisible});
+          this.setState({lastResultVisible});
+        }
       });
     })
   }
