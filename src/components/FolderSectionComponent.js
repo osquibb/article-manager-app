@@ -28,6 +28,7 @@ class FolderSection extends React.Component {
     this.deleteArticle = this.deleteArticle.bind(this);
   }
 
+
   async getWikiArticles(searchTerm) {
     let searchResults = [];
     if (searchTerm !== '') {
