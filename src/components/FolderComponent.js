@@ -68,7 +68,7 @@ class InnerList extends React.Component {
       <Article key={article.id}
                article={article} 
                index={index}
-               hideDeleteButton={this.props.hideDeleteButton}
+               hideDeleteButton={this.props.isFirstFolder}
                deleteArticle = {this.props.deleteArticle}
       />
     ));
@@ -143,7 +143,7 @@ export default class Folder extends React.Component {
                   isDraggingOver={snapshot.isDraggingOver}
                 >
                   <InnerList articles={this.props.articles}
-                             hideDeleteButton={this.props.folder.id === 'folder-1'}
+                             isFirstFolder={this.props.folder.id === 'folder-1'}
                              deleteArticle={this.props.deleteArticle}
                   />
                   <Footer hidden={hideFooter}>

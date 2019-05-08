@@ -28,28 +28,6 @@ class FolderSection extends React.Component {
     this.deleteArticle = this.deleteArticle.bind(this);
   }
 
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   const prevArticleIds = prevState.folders['folder-1'].articleIds;
-  //   const currentArticleIds = this.state.folders['folder-1'].articleIds
-  //   const newSearchResults = [];
-  //   // for each article in the previous folder list..
-  //   for (let i=0; i < prevArticleIds.length; i++) {
-  //     const foundIdx = currentArticleIds.indexOf(prevArticleIds[i]);
-  //     // if an article was in the previous list but not in the current list...
-  //     if (foundIdx === -1) {
-  //       // for each article in the search results list..
-  //       for (let j=0; j < this.state.searchResults.length; j++) {
-  //         // add to new search results every item except the one missing from the previous list
-  //         if (this.state.searchResults[j].id !== prevArticleIds[i]) {
-  //           newSearchResults.push(this.state.searchResults[j]);
-  //         }
-  //       }
-  //     }
-  //   }
-  //   this.setState({searchResults: newSearchResults})
-
-  // }
-
   async getWikiArticles(searchTerm) {
     let searchResults = [];
     if (searchTerm !== '') {
