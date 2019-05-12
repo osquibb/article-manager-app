@@ -4,56 +4,69 @@ import Article from './ArticleComponent';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
-  margin: 8px;
-  border: ${props => props.index === 0 ? 'none' : '1px solid lightgrey'};
-  background-color: white;
-  border-radius: 2px;
-  width: 200px;
+  margin: 12px;
+  margin-top: ${props => props.index === 0 ? '80px' : null};
+  border: none;
+  background-color: #d9f2d5;
+  width: 260px;
   min-height: 260px;
   display: flex;
   flex-direction: column;
   position: relative;
 `;
 const Title = styled.h5`
-  color: #9E9E9E;
+  color: black;
   padding: 8px;
   margin: 0;
-  border-bottom: 1px solid lightgrey;
 `;
 const Input = styled.input`
   padding: 8px;
+  width: 60%;
+  background-color: inherit;
   font-weight: 200;
   border-style: none;
-  border-bottom: 1px solid lightgrey;
   &:focus {
     outline: none;
-    background-color: #DCF8FF;
   }
 
 `;
 const ArticleList = styled.div`
   padding: 8px;
-  background-color: ${props => (props.isDraggingOver ? '#ECECEC' : 'inherit')};
+  border-radius: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: ${props => (props.isDraggingOver ? '#d5ede4' : 'inherit')};
+  border: ${props => (props.isDraggingOver ? '1px solid grey' : 'none')};
   flex-grow: 1;
   min-height: 100px;
   `;
 
 const Button = styled.button`
 border: none;
-background: none;
-color: #9E9E9E;
+background: transparent;
+color: #7a8699;
+&:focus {
+  outline: none;
+}
 &:hover {
   color: black;
 }
 `;
 
-const Footer = styled.div`
-border: none;
-background: white;
-color: #9E9E9E;
+const Header = styled.span`
+background-color: #d5ede4;
+border-bottom: 1px solid lightgrey;
+`;
+
+const Navigation = styled.span`
 position: absolute;
-bottom: -30px;
-right: 8px;
+top: 3px;
+right: 2px;
+`;
+
+const InfoText = styled.div`
+position: absolute;
+top: -70px;
+left: -14px;
 `;
 
 class InnerList extends React.Component {
@@ -85,6 +98,7 @@ export default class Folder extends React.Component {
     };
     this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.mobileSearchSubmit = this.mobileSearchSubmit.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
   }
@@ -103,6 +117,10 @@ export default class Folder extends React.Component {
     this.setState({searchTerm: e.target.value});
   }
 
+  mobileSearchSubmit() {
+    this.props.populateSearchResults(this.state.searchTerm, 1);
+  }
+
   handleSearchSubmit(e) {
     if(e.key === 'Enter') {
       this.props.populateSearchResults(this.state.searchTerm, 1);
@@ -111,7 +129,7 @@ export default class Folder extends React.Component {
 
   render() {
     const isFirstFolder = this.props.index === 0;
-    const hideFooter = this.props.folder.id !== 'folder-1' ||
+    const hideNavigation = this.props.folder.id !== 'folder-1' ||
       (this.props.folder.id === 'folder-1' && this.props.articles.length === 0);
     return(
       <Draggable 
@@ -127,13 +145,36 @@ export default class Folder extends React.Component {
             index={this.props.index}
           >
                 {!isFirstFolder 
-                  ? <Title>{this.props.folder.title}</Title> 
-                  : <Input type='text'
-                           placeholder="Search Wikipedia..."
-                           value={this.state.searchTerm}
-                           onChange={this.handleSearchChange}
-                           onKeyDown={this.handleSearchSubmit}
-                    />
+                  ? <Header>
+                      <Title>{this.props.folder.title}</Title>
+                    </Header> 
+                  : <React.Fragment>
+                      <InfoText>
+                        <ol>
+                          <li>Search Wikipedia</li>
+                          <li>Drag and drop articles</li>
+                        </ol>
+                      </InfoText>
+                      <Header>
+                        <Input type='text'
+                              placeholder="Search Wikipedia..."
+                              value={this.state.searchTerm}
+                              onBlur={this.mobileSearchSubmit}
+                              onChange={this.handleSearchChange}
+                              onKeyDown={this.handleSearchSubmit}
+                        />
+                        <Navigation hidden={hideNavigation}>
+                          <Button onClick={this.prevPage}
+                                  hidden={this.props.hidePrevButton} 
+                                  className="fa fa-arrow-circle-left fa-2x">
+                          </Button>
+                          <Button onClick={this.nextPage}
+                                  hidden={this.props.hideNextButton}>
+                            <i className="fa fa-arrow-circle-right fa-2x"></i>
+                          </Button>
+                        </Navigation>
+                      </Header>
+                    </React.Fragment> 
                 }
             <Droppable droppableId={this.props.folder.id} 
                        type="article"
@@ -148,16 +189,7 @@ export default class Folder extends React.Component {
                              isFirstFolder={this.props.folder.id === 'folder-1'}
                              deleteArticle={this.props.deleteArticle}
                   />
-                  <Footer hidden={hideFooter}>
-                  <Button onClick={this.prevPage}
-                          hidden={this.props.hidePrevButton} 
-                          className="fa fa-arrow-circle-left fa-2x">
-                  </Button>
-                  <Button onClick={this.nextPage}
-                          hidden={this.props.hideNextButton} 
-                          className="fa fa-arrow-circle-right fa-2x">
-                  </Button>
-                  </Footer>
+                  
                   {provided.placeholder}
                 </ArticleList>
               )}

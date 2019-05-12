@@ -1,7 +1,6 @@
 ## TODO
 
 - Custom folder titles
-- other styling
 
 - populate search results with 4 at all times (if possible, or all remaining in this.state.searchResults)
 

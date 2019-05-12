@@ -32,7 +32,7 @@ class FolderSection extends React.Component {
   async getWikiArticles(searchTerm) {
     let searchResults = [];
     if (searchTerm !== '') {
-      await fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=32`)
+      await fetch(`https://en.wikipedia.org/w/api.php?&origin=*&action=opensearch&search=${searchTerm}&limit=35`)
             .then(resp => resp.json())
             .then(data => {
               let _searchResults = []
@@ -63,11 +63,11 @@ class FolderSection extends React.Component {
       searchResults = this.state.searchResults;
     }
     this.setState({searchResults}, () => {
-      let lastIdx = pageNum * 4;
+      let lastIdx = pageNum * 5;
       if (lastIdx >= searchResults.length) {
         lastIdx = searchResults.length;
       }
-      let firstIdx = lastIdx - 4;
+      let firstIdx = lastIdx - 5;
       if (firstIdx < 0) {
         firstIdx = 0;
       }
@@ -245,12 +245,14 @@ class FolderSection extends React.Component {
             <Container
               {...provided.droppableProps}
               ref={provided.innerRef}
+              className="row"
             >
               {this.state.folderOrder.map((folderId, index) => {
                 const folder = this.state.folders[folderId];
                 const articles = folder.articleIds.map(articleId => this.state.articles[articleId]);
                 return (
                   <Folder 
+                    className="col"
                     key={folder.id}
                     folder={folder} 
                     articles={articles} 
