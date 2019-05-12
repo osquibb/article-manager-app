@@ -57,6 +57,12 @@ background-color: #d5ede4;
 border-bottom: 1px solid lightgrey;
 `;
 
+const SearchIcon = styled.i`
+position: absolute;
+top: 3px;
+right: 8px;
+`;
+
 const Navigation = styled.span`
 position: absolute;
 top: 3px;
@@ -163,15 +169,15 @@ export default class Folder extends React.Component {
                               onChange={this.handleSearchChange}
                               onKeyDown={this.handleSearchSubmit}
                         />
+                        <SearchIcon className="fa fa-2x fa-search"
+                                      hidden={!hideNavigation} />
                         <Navigation hidden={hideNavigation}>
                           <Button onClick={this.prevPage}
                                   hidden={this.props.hidePrevButton} 
-                                  className="fa fa-arrow-circle-left fa-2x">
-                          </Button>
+                                  className="fa fa-arrow-circle-left fa-2x" />
                           <Button onClick={this.nextPage}
-                                  hidden={this.props.hideNextButton}>
-                            <i className="fa fa-arrow-circle-right fa-2x"></i>
-                          </Button>
+                                  hidden={this.props.hideNextButton}
+                                  className="fa fa-arrow-circle-right fa-2x" />
                         </Navigation>
                       </Header>
                     </React.Fragment> 

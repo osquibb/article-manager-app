@@ -9,7 +9,7 @@ const Container = styled.div`
   padding: 8px;
   margin-bottom: 8px;
   border-radius: 2px;
-  background-color: #ffd7a8;
+  background-color: #FFEEBA;
   border: ${props => props.isDragging
     ? '1px solid grey'
     : 'none'};
