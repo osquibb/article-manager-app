@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "62d0ace59a4a6f0ced9a5ded97e3b59a",
+    "revision": "252a119fd8d135c5f3ce50e911dcd154",
     "url": "/article-manager-app/index.html"
   },
   {
-    "revision": "af7bfc9fd8551e202f1f",
+    "revision": "eabf4fa377c341a52605",
     "url": "/article-manager-app/static/css/2.34dc5f7e.chunk.css"
   },
   {
-    "revision": "7820326d98cc3b67cc15",
+    "revision": "1cec8b387d9871fada2a",
     "url": "/article-manager-app/static/css/main.cffb24a0.chunk.css"
   },
   {
-    "revision": "af7bfc9fd8551e202f1f",
-    "url": "/article-manager-app/static/js/2.16dcd39c.chunk.js"
+    "revision": "eabf4fa377c341a52605",
+    "url": "/article-manager-app/static/js/2.d0834b77.chunk.js"
   },
   {
-    "revision": "7820326d98cc3b67cc15",
-    "url": "/article-manager-app/static/js/main.b78404fe.chunk.js"
+    "revision": "1cec8b387d9871fada2a",
+    "url": "/article-manager-app/static/js/main.da3612cc.chunk.js"
   },
   {
     "revision": "567b275a20bbfead80ec",
