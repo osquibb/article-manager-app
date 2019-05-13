@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/article-manager-app/static/css/main.cffb24a0.chunk.css",
-    "main.js": "/article-manager-app/static/js/main.da3612cc.chunk.js",
-    "main.js.map": "/article-manager-app/static/js/main.da3612cc.chunk.js.map",
+    "main.css": "/article-manager-app/static/css/main.28d2c052.chunk.css",
+    "main.js": "/article-manager-app/static/js/main.eb3b03f9.chunk.js",
+    "main.js.map": "/article-manager-app/static/js/main.eb3b03f9.chunk.js.map",
     "runtime~main.js": "/article-manager-app/static/js/runtime~main.4ce29075.js",
     "runtime~main.js.map": "/article-manager-app/static/js/runtime~main.4ce29075.js.map",
     "static/css/2.34dc5f7e.chunk.css": "/article-manager-app/static/css/2.34dc5f7e.chunk.css",
     "static/js/2.d0834b77.chunk.js": "/article-manager-app/static/js/2.d0834b77.chunk.js",
     "static/js/2.d0834b77.chunk.js.map": "/article-manager-app/static/js/2.d0834b77.chunk.js.map",
     "index.html": "/article-manager-app/index.html",
-    "precache-manifest.d142c3c7626aea045d6c6290a40db3b3.js": "/article-manager-app/precache-manifest.d142c3c7626aea045d6c6290a40db3b3.js",
+    "precache-manifest.39611a56fb507fb9890dd53989953472.js": "/article-manager-app/precache-manifest.39611a56fb507fb9890dd53989953472.js",
     "service-worker.js": "/article-manager-app/service-worker.js",
     "static/css/2.34dc5f7e.chunk.css.map": "/article-manager-app/static/css/2.34dc5f7e.chunk.css.map",
-    "static/css/main.cffb24a0.chunk.css.map": "/article-manager-app/static/css/main.cffb24a0.chunk.css.map",
+    "static/css/main.28d2c052.chunk.css.map": "/article-manager-app/static/css/main.28d2c052.chunk.css.map",
     "static/media/font-awesome.min.css": "/article-manager-app/static/media/fontawesome-webfont.fee66e71.woff"
   }
 }

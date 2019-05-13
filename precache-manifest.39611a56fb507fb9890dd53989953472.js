@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b322f612055ab2bbbacba62de9722726",
+    "revision": "0ccc80d42fd90a9c1efa82566fa75b9c",
     "url": "/article-manager-app/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/article-manager-app/static/css/2.34dc5f7e.chunk.css"
   },
   {
-    "revision": "1cec8b387d9871fada2a",
-    "url": "/article-manager-app/static/css/main.cffb24a0.chunk.css"
+    "revision": "4ba5fca3fd18244f36bf",
+    "url": "/article-manager-app/static/css/main.28d2c052.chunk.css"
   },
   {
     "revision": "eabf4fa377c341a52605",
     "url": "/article-manager-app/static/js/2.d0834b77.chunk.js"
   },
   {
-    "revision": "1cec8b387d9871fada2a",
-    "url": "/article-manager-app/static/js/main.da3612cc.chunk.js"
+    "revision": "4ba5fca3fd18244f36bf",
+    "url": "/article-manager-app/static/js/main.eb3b03f9.chunk.js"
   },
   {
     "revision": "567b275a20bbfead80ec",
