@@ -5,13 +5,17 @@ import { Draggable } from 'react-beautiful-dnd';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  box-shadow: 1px 1px 5px grey
+  box-shadow: 1px 1px 5px grey;
   padding: 8px;
   margin-bottom: 8px;
-  border-radius: 2px;
-  background-color: #FFEEBA;
-  border: ${props => props.isDragging
-    ? '1px solid grey'
+  background-color: #FFFBC7;
+  border: 2px solid #1A163D;
+  &:hover {
+    box-shadow: 3px 3px #1A163D;
+  }
+  transition: box-shadow 0.2s ease-in-out;
+  box-shadow: ${props => props.isDragging
+    ? '3px 3px #1A163D'
     : 'none'};
   display: flex;
 `;

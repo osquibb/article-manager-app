@@ -6,8 +6,8 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 const Container = styled.div`
   margin: 12px;
   margin-top: ${props => props.index === 0 ? '80px' : null};
-  border: none;
-  background-color: #d9f2d5;
+  border: 2px solid #1A163D;
+  background-color: white;
   width: 260px;
   min-height: 260px;
   display: flex;
@@ -15,7 +15,7 @@ const Container = styled.div`
   position: relative;
 `;
 const Title = styled.h5`
-  color: black;
+  color: white;
   padding: 8px;
   margin: 0;
 `;
@@ -32,28 +32,27 @@ const Input = styled.input`
 `;
 const ArticleList = styled.div`
   padding: 8px;
-  border-radius: 2px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color: ${props => (props.isDraggingOver ? '#d5ede4' : 'inherit')};
-  border: ${props => (props.isDraggingOver ? '1px solid grey' : 'none')};
   flex-grow: 1;
+  transition: box-shadow 0.2s ease-in-out;
+  box-shadow: ${props => (props.isDraggingOver ? '6px 6px #1A163D' : 'none')};
   min-height: 100px;
   `;
 
 const Button = styled.button`
 border: none;
 background: transparent;
-color: #7a8699;
+color: #1A163D;
 &:focus {
   outline: none;
 }
 &:hover {
-  color: black;
+  color: white;
 }
 `;
 
 const Header = styled.span`
-background-color: #d5ede4;
+background-color: #E07D7E;
+color: white;
 border-bottom: 1px solid lightgrey;
 `;
 
@@ -61,6 +60,9 @@ const SearchIcon = styled.i`
 position: absolute;
 top: 3px;
 right: 8px;
+&:hover {
+  cursor: pointer;
+}
 `;
 
 const Navigation = styled.span`
@@ -163,14 +165,16 @@ export default class Folder extends React.Component {
                       </InfoText>
                       <Header>
                         <Input type='text'
-                              placeholder="Search Wikipedia..."
-                              value={this.state.searchTerm}
-                              onBlur={this.mobileSearchSubmit}
-                              onChange={this.handleSearchChange}
-                              onKeyDown={this.handleSearchSubmit}
+                               placeholder="Search Wikipedia..."
+                               ref={input => this.searchInput = input} 
+                               value={this.state.searchTerm}
+                               onBlur={this.mobileSearchSubmit}
+                               onChange={this.handleSearchChange}
+                               onKeyDown={this.handleSearchSubmit}
                         />
                         <SearchIcon className="fa fa-2x fa-search"
-                                      hidden={!hideNavigation} />
+                                    hidden={!hideNavigation}
+                                    onClick={() => this.searchInput.focus()}   />
                         <Navigation hidden={hideNavigation}>
                           <Button onClick={this.prevPage}
                                   hidden={this.props.hidePrevButton} 
