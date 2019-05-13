@@ -8,8 +8,8 @@ const Container = styled.div`
   box-shadow: 1px 1px 5px grey;
   padding: 8px;
   margin-bottom: 8px;
-  background-color: #FFFBC7;
-  border: 2px solid #1A163D;
+  background-color: white;
+  border: 1px solid #1A163D;
   &:hover {
     box-shadow: 3px 3px #1A163D;
   }

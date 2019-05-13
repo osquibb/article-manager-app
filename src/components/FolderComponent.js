@@ -6,16 +6,16 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 const Container = styled.div`
   margin: 12px;
   margin-top: ${props => props.index === 0 ? '80px' : null};
-  border: 2px solid #1A163D;
+  border: 1px solid #1A163D;
   background-color: white;
   width: 260px;
   min-height: 260px;
   display: flex;
   flex-direction: column;
   position: relative;
+  box-shadow: 3px 3px #1A163D;
 `;
 const Title = styled.h5`
-  color: white;
   padding: 8px;
   margin: 0;
 `;
@@ -33,8 +33,9 @@ const Input = styled.input`
 const ArticleList = styled.div`
   padding: 8px;
   flex-grow: 1;
-  transition: box-shadow 0.2s ease-in-out;
-  box-shadow: ${props => (props.isDraggingOver ? '6px 6px #1A163D' : 'none')};
+  background-image: ${props => (props.isDraggingOver ? 'radial-gradient(#1A163D 10%, transparent 15%), radial-gradient(#1A163D 10%, transparent 15%)' : 'none')};
+  background-size: 24px 24px;
+  background-position: 0 0, 12px 12px;
   min-height: 100px;
   `;
 
@@ -46,13 +47,12 @@ color: #1A163D;
   outline: none;
 }
 &:hover {
-  color: white;
+  color: #E07D7E;
 }
 `;
 
 const Header = styled.span`
-background-color: #E07D7E;
-color: white;
+background-color: #FFFBC7;
 border-bottom: 1px solid lightgrey;
 `;
 

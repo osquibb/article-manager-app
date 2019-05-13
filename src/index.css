@@ -7,20 +7,20 @@ body {
 }
 
 input {
-  color: white;
+  color: #1A163D;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: white;
+  color: #1A163D;
 }
 ::-moz-placeholder { /* Firefox 19+ */
-  color: white;
+  color: #1A163D;
 }
 :-ms-input-placeholder { /* IE 10+ */
-  color: white;
+  color: #1A163D;
 }
 :-moz-placeholder { /* Firefox 18- */
-  color: white;
+  color: #1A163D;
 }
 
 a {
