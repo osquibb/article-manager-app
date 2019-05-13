@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/article-manager-app/static/css/main.28d2c052.chunk.css",
-    "main.js": "/article-manager-app/static/js/main.9e478e6a.chunk.js",
-    "main.js.map": "/article-manager-app/static/js/main.9e478e6a.chunk.js.map",
+    "main.js": "/article-manager-app/static/js/main.eb3b03f9.chunk.js",
+    "main.js.map": "/article-manager-app/static/js/main.eb3b03f9.chunk.js.map",
     "runtime~main.js": "/article-manager-app/static/js/runtime~main.4ce29075.js",
     "runtime~main.js.map": "/article-manager-app/static/js/runtime~main.4ce29075.js.map",
     "static/css/2.34dc5f7e.chunk.css": "/article-manager-app/static/css/2.34dc5f7e.chunk.css",
     "static/js/2.d0834b77.chunk.js": "/article-manager-app/static/js/2.d0834b77.chunk.js",
     "static/js/2.d0834b77.chunk.js.map": "/article-manager-app/static/js/2.d0834b77.chunk.js.map",
     "index.html": "/article-manager-app/index.html",
-    "precache-manifest.56afa740ec4d2b358976a25c545f0e62.js": "/article-manager-app/precache-manifest.56afa740ec4d2b358976a25c545f0e62.js",
+    "precache-manifest.39611a56fb507fb9890dd53989953472.js": "/article-manager-app/precache-manifest.39611a56fb507fb9890dd53989953472.js",
     "service-worker.js": "/article-manager-app/service-worker.js",
     "static/css/2.34dc5f7e.chunk.css.map": "/article-manager-app/static/css/2.34dc5f7e.chunk.css.map",
     "static/css/main.28d2c052.chunk.css.map": "/article-manager-app/static/css/main.28d2c052.chunk.css.map",
